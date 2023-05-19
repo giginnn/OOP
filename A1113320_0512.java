@@ -1,6 +1,6 @@
 import java.util.*;
 
-import javax.swing.text.DefaultEditorKit.CutAction;
+
 class selldumpling extends Thread{
     Eat e;
     int num;
@@ -11,13 +11,13 @@ class selldumpling extends Thread{
     }
 
     public void run(){
-        e.eat();
+        e.eat(num);
     }
 }
 
 class Eat{
 
-    public synchronized void eat(){
+    public synchronized void eat(int num){
         String dumplingtypes[]={"pork","beef","vegitable"};
         int dumplingnums[]={5000,3000,1000};
         Random rand = new Random();
@@ -31,7 +31,7 @@ class Eat{
                 break;
             }
         }
-        System.out.println(Thread.currentThread().getName()+"buy"+amount+dumplingtypes[type]+"dumplings.");
+        System.out.println("Customer"+num+" buy "+amount+" "+dumplingtypes[type]+"dumplings.");
         if(type==0){
             dumplingnums[0]=dumplingnums[0]-amount;
         }
@@ -50,7 +50,7 @@ class Eat{
     }
     public void startEat(int customer){
         for(int n=1;n<=customer;n++){
-            selldumpling eater=new selldumpling(this,customer);
+            selldumpling eater=new selldumpling(this,n);
             eater.start(); 
             try{
                 Thread.sleep(3000);
